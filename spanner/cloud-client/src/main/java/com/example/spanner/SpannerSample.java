@@ -132,7 +132,7 @@ public class SpannerSample {
 
   // [START spanner_create_database]
   static void createDatabase(DatabaseAdminClient dbAdminClient, DatabaseId id) {
-    Operation<Database, CreateDatabaseMetadata> op =
+    OperationFuture<Database, CreateDatabaseMetadata> op =
         dbAdminClient.createDatabase(
             id.getInstanceId().getInstance(),
             id.getDatabase(),
@@ -149,14 +149,20 @@ public class SpannerSample {
                     + "  AlbumTitle   STRING(MAX)\n"
                     + ") PRIMARY KEY (SingerId, AlbumId),\n"
                     + "  INTERLEAVE IN PARENT Singers ON DELETE CASCADE"));
-    Database db = op.waitFor().getResult();
+    try {
+      Database db = op.get().getResult();
+    } catch (ExecutionException e) {
+      throw (SpannerException) e.getCause();
+    } catch (InterruptedException e) {
+      throw SpannerExceptionFactory.propagateInterrupt(e);
+    }
     System.out.println("Created database [" + db.getId() + "]");
   }
   // [END spanner_create_database]
 
   // [START spanner_create_table_with_timestamp_column]
   static void createTableWithTimestamp(DatabaseAdminClient dbAdminClient, DatabaseId id) {
-    Operation<Void, UpdateDatabaseDdlMetadata> op =
+    OperationFuture<Void, UpdateDatabaseDdlMetadata> op =
         dbAdminClient.updateDatabaseDdl(
             id.getInstanceId().getInstance(),
             id.getDatabase(),
@@ -170,7 +176,13 @@ public class SpannerSample {
                     + ") PRIMARY KEY (SingerId, VenueId, EventDate),\n"
                     + "  INTERLEAVE IN PARENT Singers ON DELETE CASCADE"),
             null);
-    op.waitFor().getResult();
+    try {
+      op.get().getResult();
+    } catch (ExecutionException e) {
+      throw (SpannerException) e.getCause();
+    } catch (InterruptedException e) {
+      throw SpannerExceptionFactory.propagateInterrupt(e);
+    }
     System.out.println("Created Performances table in database: [" + id + "]");
   }
   // [END spanner_create_table_with_timestamp_column]
