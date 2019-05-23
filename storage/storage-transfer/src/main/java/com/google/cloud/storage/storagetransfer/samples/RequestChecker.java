@@ -1,5 +1,5 @@
-/**
- * Copyright 2015 Google Inc. All Rights Reserved.
+/*
+ * Copyright 2015 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,12 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 // [START all]
+
 package com.google.cloud.storage.storagetransfer.samples;
 
-import com.google.api.services.storagetransfer.Storagetransfer;
-import com.google.api.services.storagetransfer.model.ListOperationsResponse;
-
+import com.google.api.services.storagetransfer.v1.Storagetransfer;
+import com.google.api.services.storagetransfer.v1.model.ListOperationsResponse;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -47,9 +48,11 @@ public final class RequestChecker {
    * @throws IOException
    *           if the client failed to complete the request
    */
-  public static ListOperationsResponse checkTransfer(Storagetransfer client,
-      String projectId, String jobName) throws IOException {
-    return client.transferOperations().list("transferOperations")
+  public static ListOperationsResponse checkTransfer(
+      Storagetransfer client, String projectId, String jobName) throws IOException {
+    return client
+        .transferOperations()
+        .list("transferOperations")
         .setFilter("{\"project_id\": \"" + projectId + "\", \"job_names\": [\"" + jobName + "\"] }")
         .execute();
   }
@@ -63,8 +66,7 @@ public final class RequestChecker {
   public static void main(String[] args) {
     try {
       ListOperationsResponse resp =
-          checkTransfer(TransferClientCreator.createStorageTransferClient(),
-          PROJECT_ID, JOB_NAME);
+          checkTransfer(TransferClientCreator.createStorageTransferClient(), PROJECT_ID, JOB_NAME);
       LOG.info("Result of transferOperations/list: " + resp.toPrettyString());
     } catch (Exception e) {
       e.printStackTrace();

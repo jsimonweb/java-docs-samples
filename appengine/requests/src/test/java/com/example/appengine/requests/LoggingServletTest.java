@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Google Inc. All Rights Reserved.
+ * Copyright 2016 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,12 @@ package com.example.appengine.requests;
 import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.Mockito.when;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,14 +32,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * Unit tests for {@link LoggingServlet}.
@@ -63,9 +61,9 @@ public class LoggingServletTest {
     servletUnderTest = new LoggingServlet();
   }
 
-  @After 
+  @After
   public void tearDown() {
-    //  Restore stderr  
+    //  Restore stderr
     System.setErr(LoggingServletTest.REAL_ERR);
   }
 
@@ -74,7 +72,7 @@ public class LoggingServletTest {
     servletUnderTest.doGet(mockRequest, mockResponse);
 
     String out = stderr.toString();
-    
+
     // We expect three log messages to be created
     // with the following messages.
     assertThat(out).contains("An informational message.");

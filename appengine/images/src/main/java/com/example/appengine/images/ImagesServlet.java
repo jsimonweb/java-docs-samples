@@ -1,5 +1,5 @@
-/**
- * Copyright 2015 Google Inc. All Rights Reserved.
+/*
+ * Copyright 2015 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  */
 
 package com.example.appengine.images;
+
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
@@ -61,7 +62,7 @@ public class ImagesServlet extends HttpServlet {
     FileChannel fileChannel = fileInputStream.getChannel();
     ByteBuffer byteBuffer = ByteBuffer.allocate((int)fileChannel.size());
     fileChannel.read(byteBuffer);
-    
+
     byte[] imageBytes = byteBuffer.array();
 
     // Write the original image to Cloud Storage
@@ -90,7 +91,7 @@ public class ImagesServlet extends HttpServlet {
     //[START rotate]
     // Make an image from a Cloud Storage object, and transform it.
     BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
-    BlobKey blobKey = blobstoreService.createGsBlobKey("gs://" + bucket + "/image.jpeg");
+    BlobKey blobKey = blobstoreService.createGsBlobKey("/gs/" + bucket + "/image.jpeg");
     Image blobImage = ImagesServiceFactory.makeImageFromBlob(blobKey);
     Transform rotate = ImagesServiceFactory.makeRotate(90);
     Image rotatedImage = imagesService.applyTransform(rotate, blobImage);
@@ -103,7 +104,7 @@ public class ImagesServlet extends HttpServlet {
     //[END rotate]
 
     // Output some simple HTML to display the images we wrote to Cloud Storage
-    // in the browser. 
+    // in the browser.
     PrintWriter out = resp.getWriter();
     out.println("<html><body>\n");
     out.println("<img src='//storage.cloud.google.com/" + bucket

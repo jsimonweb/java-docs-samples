@@ -1,4 +1,4 @@
-/* Copyright 2016 Google Inc. All Rights Reserved.
+/* Copyright 2016 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,29 +12,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START logs_API_example]
+
 package com.example.appengine.logs;
 
 import com.google.appengine.api.log.AppLogLine;
 import com.google.appengine.api.log.LogQuery;
 import com.google.appengine.api.log.LogServiceFactory;
 import com.google.appengine.api.log.RequestLogs;
-
-import org.joda.time.DateTime;
-
 import java.io.IOException;
 import java.io.PrintWriter;
-
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.joda.time.DateTime;
 
 
 // Get request logs along with their app log lines and display them 5 at
 // a time, using a Next link to cycle through to the next 5.
 public class LogsServlet extends HttpServlet {
   @Override
-  public void doGet(HttpServletRequest req, HttpServletResponse resp) 
+  public void doGet(HttpServletRequest req, HttpServletResponse resp)
          throws IOException {
 
     resp.setContentType("text/html");
@@ -42,7 +39,7 @@ public class LogsServlet extends HttpServlet {
     writer.println("<!DOCTYPE html>");
     writer.println("<meta charset=\"utf-8\">");
     writer.println("<title>App Engine Logs Sample</title>");
-  
+
     // We use this to break out of our iteration loop, limiting record
     // display to 5 request logs at a time.
     int limit = 5;
@@ -81,17 +78,15 @@ public class LogsServlet extends HttpServlet {
         writer.println(String.format("<br>Date: %s", appTime.toString()));
         writer.println("<br>Level: " + appLog.getLogLevel() + "<br>");
         writer.println("Message: " + appLog.getLogMessage() + "<br> <br>");
-      } 
+      }
 
       if (++count >= limit) {
         break;
       }
-    } 
+    }
 
     // When the user clicks this link, the offset is processed in the
     // GET handler and used to cycle through to the next 5 request logs.
     writer.println(String.format("<br><a href=\"/?offset=%s\">Next</a>", lastOffset));
-  }  
-} 
-// [END logs_API_example]
-
+  }
+}

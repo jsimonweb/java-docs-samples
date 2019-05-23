@@ -1,5 +1,5 @@
-/**
- * Copyright 2015 Google Inc. All Rights Reserved.
+/*
+ * Copyright 2015 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 // [START all]
+
 package com.google.cloud.storage.storagetransfer.samples;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
@@ -21,10 +23,9 @@ import com.google.api.client.googleapis.util.Utils;
 import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
-import com.google.api.services.storagetransfer.Storagetransfer;
-import com.google.api.services.storagetransfer.StoragetransferScopes;
+import com.google.api.services.storagetransfer.v1.Storagetransfer;
+import com.google.api.services.storagetransfer.v1.StoragetransferScopes;
 import com.google.common.base.Preconditions;
-
 import java.io.IOException;
 
 /**
@@ -43,8 +44,8 @@ public final class TransferClientCreator {
   public static Storagetransfer createStorageTransferClient() throws IOException {
     HttpTransport httpTransport = Utils.getDefaultTransport();
     JsonFactory jsonFactory = Utils.getDefaultJsonFactory();
-    GoogleCredential credential = GoogleCredential
-        .getApplicationDefault(httpTransport, jsonFactory);
+    GoogleCredential credential =
+        GoogleCredential.getApplicationDefault(httpTransport, jsonFactory);
     return createStorageTransferClient(httpTransport, jsonFactory, credential);
   }
 
@@ -59,8 +60,8 @@ public final class TransferClientCreator {
    *          a user-supplied Google credential
    * @return a Storage Transfer client
    */
-  public static Storagetransfer createStorageTransferClient(HttpTransport httpTransport,
-      JsonFactory jsonFactory, GoogleCredential credential) {
+  public static Storagetransfer createStorageTransferClient(
+      HttpTransport httpTransport, JsonFactory jsonFactory, GoogleCredential credential) {
     Preconditions.checkNotNull(httpTransport);
     Preconditions.checkNotNull(jsonFactory);
     Preconditions.checkNotNull(credential);
@@ -74,7 +75,8 @@ public final class TransferClientCreator {
     // implementation in the "Retry Handling" section.
     HttpRequestInitializer initializer = new RetryHttpInitializerWrapper(credential);
     return new Storagetransfer.Builder(httpTransport, jsonFactory, initializer)
-        .setApplicationName("storagetransfer-sample").build();
+        .setApplicationName("storagetransfer-sample")
+        .build();
   }
 }
 //[END all]

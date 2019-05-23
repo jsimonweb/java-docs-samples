@@ -1,5 +1,5 @@
-/**
- * Copyright 2016 Google Inc. All Rights Reserved.
+/*
+ * Copyright 2016 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-// [START example]
+// [START gae_java_mysql_app]
 @SuppressWarnings("serial")
 public class CloudSqlServlet extends HttpServlet {
 
@@ -62,6 +62,7 @@ public class CloudSqlServlet extends HttpServlet {
     final String createVisitSql = "INSERT INTO visits (user_ip, timestamp) VALUES (?, ?)";
     final String selectSql = "SELECT user_ip, timestamp FROM visits ORDER BY timestamp DESC "
         + "LIMIT 10";
+
     PrintWriter out = resp.getWriter();
     resp.setContentType("text/plain");
     String url;
@@ -81,6 +82,7 @@ public class CloudSqlServlet extends HttpServlet {
       // Set the url with the local MySQL database connection url when running locally
       url = System.getProperty("ae-cloudsql.local-database-url");
     }
+    log("connecting to: " + url);
     try (Connection conn = DriverManager.getConnection(url);
         PreparedStatement statementCreateVisit = conn.prepareStatement(createVisitSql)) {
       conn.createStatement().executeUpdate(createTableSql);
@@ -101,4 +103,4 @@ public class CloudSqlServlet extends HttpServlet {
     }
   }
 }
-// [END example]
+// [END gae_java_mysql_app]

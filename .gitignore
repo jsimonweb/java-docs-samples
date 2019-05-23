@@ -25,7 +25,9 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 
+# Secrets
 service-account.json
+secrets.env
 
 # intellij
 .idea/
@@ -35,3 +37,21 @@ service-account.json
 .project
 .classpath
 .settings
+
+# vim
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+Session.vim
+.netrwhist
+*~
+tags
+
+# Gradle
+out/
+.gradle/
+
+# VS Code
+.vscode/
+
+# OSX
+.DS_Store

@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Google Inc. All Rights Reserved.
+ * Copyright 2015 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -152,7 +152,7 @@ public class ComputeEngineSample {
     return found;
   }
   // [END list_instances]
-  
+
   // [START create_instances]
   public static Operation startInstance(Compute compute, String instanceName) throws IOException {
     System.out.println("================== Starting New Instance ==================");

@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Google Inc. All Rights Reserved.
+ * Copyright 2015 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,15 +19,17 @@ package com.google.cloud.storage.storagetransfer.samples.test;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.google.api.services.storagetransfer.Storagetransfer;
-import com.google.api.services.storagetransfer.Storagetransfer.TransferOperations;
-import com.google.api.services.storagetransfer.Storagetransfer.TransferOperations.List;
+import com.google.api.services.storagetransfer.v1.Storagetransfer;
+import com.google.api.services.storagetransfer.v1.Storagetransfer.TransferOperations;
+import com.google.api.services.storagetransfer.v1.Storagetransfer.TransferOperations.List;
 import com.google.cloud.storage.storagetransfer.samples.RequestChecker;
-
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 import org.mockito.Matchers;
 import org.mockito.Mockito;
 
+@RunWith(JUnit4.class)
 public class RequestCheckerTest {
   private Storagetransfer mockClient = Mockito.mock(Storagetransfer.class);
   private List mockList = Mockito.mock(List.class);
