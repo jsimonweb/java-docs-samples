@@ -1047,26 +1047,26 @@ public class SpannerSample {
                 // Transfer marketing budget from one album to another. We do it in a transaction to
                 // ensure that the transfer is atomic.
                 String sql1 =
-                    "SELECT MarketingBudget from Albums WHERE SingerId = 1 and AlbumId = 1";
+                    "SELECT MarketingBudget from Albums WHERE SingerId = 2 and AlbumId = 2";
                 ResultSet resultSet = transaction.executeQuery(Statement.of(sql1));
-                long album1Budget = 0;
+                long album2Budget = 0;
                 while (resultSet.next()) {
-                  album1Budget = resultSet.getLong("MarketingBudget");
+                  album2Budget = resultSet.getLong("MarketingBudget");
                 }
                 // Transaction will only be committed if this condition still holds at the time of
                 // commit. Otherwise it will be aborted and the callable will be rerun by the
                 // client library.
-                if (album1Budget >= 300000) {
+                if (album2Budget >= 300000) {
                   String sql2 =
-                      "SELECT MarketingBudget from Albums WHERE SingerId = 2 and AlbumId = 2";
+                      "SELECT MarketingBudget from Albums WHERE SingerId = 1 and AlbumId = 1";
                   ResultSet resultSet2 = transaction.executeQuery(Statement.of(sql2));
-                  long album2Budget = 0;
-                  while (resultSet.next()) {
-                    album2Budget = resultSet2.getLong("MarketingBudget");
+                  long album1Budget = 0;
+                  while (resultSet2.next()) {
+                    album1Budget = resultSet2.getLong("MarketingBudget");
                   }
                   long transfer = 200000;
-                  album2Budget += transfer;
-                  album1Budget -= transfer;
+                  album2Budget -= transfer;
+                  album1Budget += transfer;
                   Statement updateStatement =
                       Statement.newBuilder(
                           "UPDATE Albums "
